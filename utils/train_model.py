@@ -12,6 +12,7 @@
 # Dependencies
 import pandas as pd
 import pickle
+import numpy as np
 from sklearn.linear_model import LinearRegression
 
 # Fetch training data and preprocess for modeling
@@ -76,7 +77,7 @@ Bdict = {'Personal': 0, 'Business': 1}
 copy['Personal or Business'] = copy['Personal or Business'].map(Bdict)
 
 
-copy.fillna(copy.mean(), inplace=True)
+copy= copy.replace(np.nan, 0)
 
 x = copy.drop(['Time from Pickup to Arrival'], axis=1)
 y = copy['Time from Pickup to Arrival']
@@ -102,6 +103,6 @@ lm.fit(X_train, y_train)
 #pickle.dump(lm_regression, open(save_path,'wb'))
 import pickle
 
-model_save_path = "mlr_model.pkl"
+model_save_path = "mlrr_model.pkl"
 with open(model_save_path,'wb') as file:
     pickle.dump(lm,file)

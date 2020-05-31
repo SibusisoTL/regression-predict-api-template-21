@@ -122,7 +122,7 @@ def _preprocess_data(data):
     predict_vector['Personal or Business'] = predict_vector['Personal or Business'].map(Bdict)
 
 
-    predict_vector.fillna(predict_vector.mean(), inplace=True)
+    predict_vector= predict_vector.replace(np.nan, 0)
 
     #copy = copy.drop(['Time from Pickup to Arrival'], axis=1)
     #y = copy['Time from Pickup to Arrival']
