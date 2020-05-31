@@ -59,8 +59,73 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    predict_vector = feature_vector_df[['Pickup Lat','Pickup Long',
-                                        'Destination Lat','Destination Long']]
+    predict_vector = feature_vector_df[['Order No', 'User Id', 'Vehicle Type', 'Platform Type',
+       'Personal or Business', 'Placement - Day of Month',
+       'Placement - Weekday (Mo = 1)', 'Placement - Time',
+       'Confirmation - Day of Month', 'Confirmation - Weekday (Mo = 1)',
+       'Confirmation - Time', 'Arrival at Pickup - Day of Month',
+       'Arrival at Pickup - Weekday (Mo = 1)', 'Arrival at Pickup - Time',
+       'Pickup - Day of Month', 'Pickup - Weekday (Mo = 1)', 'Pickup - Time',
+       'Distance (KM)', 'Temperature',
+       'Precipitation in millimeters', 'Pickup Lat', 'Pickup Long',
+       'Destination Lat', 'Destination Long', 'Rider Id']]
+    
+    
+    predict_vector.drop(['Vehicle Type','Order No'], axis=1, inplace=True)
+
+
+    predict_vector[['a','b', 'UserId No']] = predict_vector["User Id"].str.split("_", expand = True)
+    predict_vector[['c','d','RiderId No']] = predict_vector["Rider Id"].str.split("_",  expand = True)
+
+    predict_vector.drop(["User Id",'Rider Id', 'a', 'b','c','d'], axis=1, inplace = True)
+
+    predict_vector.rename(columns={'UserId No':'User Id'}, inplace=True)
+    predict_vector.rename(columns={'RiderId No':'Rider Id'}, inplace=True)
+
+    def time_converter(predict_vector):
+        for x in predict_vector.columns:
+            if x.endswith("Time"):
+                predict_vector[x] = pd.to_datetime(predict_vector[x], format='%I:%M:%S %p').dt.strftime("%H:%M:%S")
+        return predict_vector
+
+    predict_vector = time_converter(predict_vector)
+    predict_vector[['Placement - Time', 'Confirmation - Time' , 'Arrival at Pickup - Time', 'Pickup - Time']][3:6]
+
+
+    predict_vector['Placement - Time_Hour'] = pd.to_datetime(predict_vector['Placement - Time']).dt.hour
+    predict_vector['Placement - Time_Minute'] = pd.to_datetime(predict_vector['Placement - Time']).dt.minute
+    predict_vector['Placement - Time_Seconds'] = pd.to_datetime(predict_vector['Placement - Time']).dt.second
+
+    predict_vector['Confirmation - Time_Hour'] = pd.to_datetime(predict_vector['Confirmation - Time']).dt.hour
+    predict_vector['Confirmation - Time_Minute'] = pd.to_datetime(predict_vector['Confirmation - Time']).dt.minute
+    predict_vector['Confirmation - Time_Seconds'] = pd.to_datetime(predict_vector['Confirmation - Time']).dt.second
+
+    predict_vector['Arrival at Pickup - Time_Hour'] = pd.to_datetime(predict_vector['Arrival at Pickup - Time']).dt.hour
+    predict_vector['Arrival at Pickup - Time_Minute'] = pd.to_datetime(predict_vector['Arrival at Pickup - Time']).dt.minute
+    predict_vector['Arrival at Pickup - Time_Seconds'] = pd.to_datetime(predict_vector['Arrival at Pickup - Time']).dt.second
+
+    predict_vector['Pickup - Time_Hour'] = pd.to_datetime(predict_vector['Pickup - Time']).dt.hour
+    predict_vector['Pickup - Time_Minute'] = pd.to_datetime(predict_vector['Pickup - Time']).dt.minute
+    predict_vector['Pickup - Time_Seconds'] = pd.to_datetime(predict_vector['Pickup - Time']).dt.second
+
+
+    predict_vector.drop(['Pickup - Time','Arrival at Pickup - Time','Confirmation - Time','Placement - Time'], axis=1, inplace=True)
+
+    #cols = list(copy.columns.values)
+    #cols.pop(cols.index('Time from Pickup to Arrival')) 
+
+    #copy = copy[cols+['Time from Pickup to Arrival']]
+
+
+    predict_vector['Personal or Business'].unique()
+    Bdict = {'Personal': 0, 'Business': 1}
+    predict_vector['Personal or Business'] = predict_vector['Personal or Business'].map(Bdict)
+
+
+    predict_vector.fillna(predict_vector.mean(), inplace=True)
+
+    #copy = copy.drop(['Time from Pickup to Arrival'], axis=1)
+    #y = copy['Time from Pickup to Arrival']
     # ------------------------------------------------------------------------
 
     return predict_vector
