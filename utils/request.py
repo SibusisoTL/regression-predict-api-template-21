@@ -21,13 +21,14 @@
 import requests
 import pandas as pd
 import numpy as np
-
+import xgboost as xgb
+from geopy.distance import distance
 # Load data from file to send as an API POST request.
 # We prepare a DataFrame with the public test set + riders data
 # from the Zindi challenge.
 test = pd.read_csv('data/test_data.csv')
 riders = pd.read_csv('data/riders.csv')
-#test = test.merge(riders, how='left', on='Rider Id')
+test = test.merge(riders, how='left', on='Rider Id')
 
 # Convert our DataFrame to a JSON string.
 # This step is necessary in order to transmit our data via HTTP/S
@@ -38,7 +39,7 @@ feature_vector_json = test.iloc[1].to_json()
 # replace the URL below with its public IP:
 
 # url = 'http://{public-ip-address-of-remote-machine}:5000/api_v0.1'
-url = 'http://54.171.244.189:5000/api_v0.1'
+url = 'http://34.250.40.42:5000/api_v0.1'
 
 # Perform the POST request.
 print(f"Sending POST request to web server API at: {url}")

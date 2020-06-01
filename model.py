@@ -86,7 +86,7 @@ def _preprocess_data(data):
                      'distance_(km)', 'temperature',
                      'precipitation_in_millimeters', 'pickup_lat', 'pickup_long', 'destination_lat',
                      'destination_long', 'rider_id', 'no_of_orders', 'age', 'average_rating',
-                     'no_of_ratings', 'time_from_pickup_to_arrival']]
+                     'no_of_ratings']]
 
     # Renaming the columns to make working with the DataFrames easier.
 
@@ -98,7 +98,7 @@ def _preprocess_data(data):
                     'distance(km)',
                     'temperature', 'precipitation(mm)', 'pickup_lat', 'pickup_long', 'destination_lat',
                     'destination_long', 'rider_id', 'no_of_orders', 'age', 'average_rating',
-                    'no_of_ratings', 'time_from_pickup_to_arrival']
+                    'no_of_ratings']
 
     # Using the Pandas .drop() method.
     # Remove columns by specifying the column names and corresponding axis.
