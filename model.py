@@ -164,8 +164,8 @@ def _preprocess_data(data):
     def distance_calc(merged_df):
         '''calculate distance (m) between two lat&long points using the Vincenty formula '''
 
-        dist_calc = distance((merged_df.Pickup Lat, merged_df.Pickup Long),
-                         (merged_df.Destination Lat, merged_df.Destination Long)).km
+        dist_calc = distance((merged_df['Pickup Lat'], merged_df['Pickup Long']),
+                         (merged_df['Destination Lat'], merged_df['Destination Long'])).km
         return dist_calc
 
 
