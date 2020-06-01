@@ -26,6 +26,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import json
+import xgboost as xgb
 
 def _preprocess_data(data):
     """Private helper function to preprocess data for model prediction.
@@ -202,18 +203,18 @@ def _preprocess_data(data):
 
 
     #Removing Outliers
-    size= 21201
-    new_df= merged_df[:len(train_df)] 
-    y = new_df['time_from_pickup_to_arrival']
-    removed_outliers = y.between(y.quantile(.05), y.quantile(.95))
+    #size= 21201
+    #new_df= merged_df[:len(train_df)] 
+    #y = new_df['time_from_pickup_to_arrival']
+    #removed_outliers = y.between(y.quantile(.05), y.quantile(.95))
 
-    print(str(y[removed_outliers].size) + "/" + str(size) + " data points remain.") 
+    #(str(y[removed_outliers].size) + "/" + str(size) + " data points remain.") 
 
     #y[removed_outliers].plot().get_figure()
-    index_names = new_df[~removed_outliers].index
-    new_df.drop(index_names, inplace=True)
+    #index_names = new_df[~removed_outliers].index
+    #new_df.drop(index_names, inplace=True)
 
-    return new_df
+    return merged_df
     #predict_vector = feature_vector_df[['Order No', 'User Id', 'Vehicle Type', 'Platform Type',
        #'Personal or Business', 'Placement - Day of Month',
        #'Placement - Weekday (Mo = 1)', 'Placement - Time',
