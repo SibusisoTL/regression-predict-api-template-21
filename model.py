@@ -122,8 +122,8 @@ def _preprocess_data(data):
     merged_df['Confirmation - Time'] = pd.to_timedelta(
     merged_df['Confirmation - Time']).dt.total_seconds()
 
-    merged_df['arrival_at_pickup_-_time'] = pd.to_timedelta(
-    merged_df['arrival_at_pickup_-_time']).dt.total_seconds()
+    merged_df['Arrival at Pickup - Time'] = pd.to_timedelta(
+    merged_df['Arrival at Pickup - Time']).dt.total_seconds()
 
     merged_df['Pickup - Time'] = pd.to_timedelta(
     merged_df['Pickup - Time']).dt.total_seconds()
