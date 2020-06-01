@@ -175,9 +175,9 @@ def _preprocess_data(data):
 
 
 
-    # Calculating the difference between the lat/long distance and the distance given.
+    # Ccalculating the difference between the lat/long distance and the distance given.
 
-    merged_df['distance_diff']= merged_df['distance(km)']- merged_df['distance_(lat/long)_(km)']
+    merged_df['distance_diff']= merged_df['Distance (KM)']- merged_df['distance_(lat/long)_(km)']
 
     #Converting the placement day of month into weeks
     merged_df['Placement - Day of Month'] = round((train_df['Placement - Day of Month']%365)/7, 0)
