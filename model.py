@@ -118,20 +118,20 @@ def _preprocess_data(data):
 
 #df_sig_test.drop(['Platform_Type_plat_2', 'Platform_Type_plat_3', 'Platform_Type_plat_4','Personal_or_Business_Personal'], axis = 1, inplace = True)
 
-    df_train_clean = df_clean.copy()
-    q = df_train_clean['Time from Pickup to Arrival'].quantile(0.98)
-    data_1 = df_train_clean[(df_train_clean['Time from Pickup to Arrival']<q) & (df_train_clean['Time from Pickup to Arrival'] > 0)]
+    #df_train_clean = df_clean.copy()
+    #q = df_train_clean['Time from Pickup to Arrival'].quantile(0.98)
+    #data_1 = df_train_clean[(df_train_clean['Time from Pickup to Arrival']<q) & (df_train_clean['Time from Pickup to Arrival'] > 0)]
 #sns.distplot(data_1['Time_from_Pickup_to_Arrival'])
 
-    p = df_train_clean['No_Of_Orders'].quantile(0.99)
-    data_2 = data_1[data_1['No_Of_Orders']<p]
+    #p = df_train_clean['No_Of_Orders'].quantile(0.99)
+    #data_2 = data_1[data_1['No_Of_Orders']<p]
 #sns.distplot(data_2['No_Of_Orders'])
 
-    u = df_train_clean['Time Placement to Confirmation'].quantile(0.99)
-    data_3 = data_2[(data_2['Time Placement to Confirmation']<u) & (data_2['Time Placement to Confirmation']>0)]
-    df_no_outliers = data_3
+    #u = df_train_clean['Time Placement to Confirmation'].quantile(0.99)
+    #data_3 = data_2[(data_2['Time Placement to Confirmation']<u) & (data_2['Time Placement to Confirmation']>0)]
+    #df_no_outliers = data_3
 
-    return df_no_outliers
+    return df_clean
     # ------------------------------------------------------------------------
 
 
