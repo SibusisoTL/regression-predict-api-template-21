@@ -86,15 +86,23 @@ u = df_train_clean['Time Placement to Confirmation'].quantile(0.99)
 data_3 = data_2[(data_2['Time Placement to Confirmation']<u) & (data_2['Time Placement to Confirmation']>0)]
 df_no_outliers = data_3
 
+cols = list(df_no_outliers.columns.values)
+cols.pop(cols.index('Time from Pickup to Arrival')) 
+
+df_no_outliers  = df_no_outliers [cols+['Time from Pickup to Arrival']]
+
+model_features=['Distance (KM)', 'Temperature', 'Precipitation in millimeters',
+       'Pickup Lat', 'Pickup Long', 'Destination Lat', 'Destination Long',
+       'No_Of_Orders', 'Age', 'Average_Rating', 'No_of_Ratings',
+       'Time Placement to Confirmation', 'Time Confirmation to PickupArrival',
+       'Time Arrival to Pickup', 'Platform Type_plat 2',
+       'Platform Type_plat 3', 'Platform Type_plat 4',
+       'Personal or Business_Personal', 'Time from Pickup to Arrival']
 
 
 x = df_no_outliers.iloc[:, :-1].values
 y = df_no_outliers.iloc[:, -1].values
 
-#x = df_clean.drop(['Time from Pickup to Arrival'], axis=1)
-#y = df_clean['Time from Pickup to Arrival']
-#x=x.values
-#y=y.values
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2, random_state = 1)
 
@@ -107,6 +115,6 @@ reg.fit(x_train, y_train)
 
 import pickle
 
-model_save_path = "xgb4_model.pkl"
+model_save_path = "xgb5_model.pkl"
 with open(model_save_path,'wb') as file:
     pickle.dump(reg,file)
