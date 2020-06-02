@@ -28,7 +28,6 @@ from geopy.distance import distance
 # from the Zindi challenge.
 test = pd.read_csv('data/test_data.csv')
 riders = pd.read_csv('data/riders.csv')
-test = test[train_df.columns]
 test = test.merge(riders, how='left', on='Rider Id')
 
 # Convert our DataFrame to a JSON string.

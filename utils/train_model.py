@@ -234,8 +234,20 @@ new_df.drop(index_names, inplace=True)
 y = new_df[['Time from Pickup to Arrival']]
 x_train = new_df.drop('Time from Pickup to Arrival',axis=1)
 x_test = merged_df[len(train_df):].drop('Time from Pickup to Arrival',axis=1)
-x_train = x_train.as_matrix()
-x_test = x_test.as_matrix()
+
+for col_to_delete in x_test.columns[~x_test.columns.isin(train_df.columns)]:
+    del x_test[col_to_delete]
+
+
+for ting in train_df.columns[~train_df.columns.isin(x_test.columns)]:
+    x_test[ting] = 0
+
+train_df = train_df.reindex_axis(sorted(train_df.columns), axis=1)
+
+x_test = x_test.reindex_axis(sorted(x_test.columns), axis=1)
+
+#x_train = x_train.as_matrix()
+#x_test = x_test.as_matrix()
 
 model= xgb.XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
              colsample_bynode=1, colsample_bytree=1, gamma=0,
