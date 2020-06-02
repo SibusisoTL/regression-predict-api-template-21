@@ -234,6 +234,8 @@ new_df.drop(index_names, inplace=True)
 y = new_df[['Time from Pickup to Arrival']]
 x_train = new_df.drop('Time from Pickup to Arrival',axis=1)
 x_test = merged_df[len(train_df):].drop('Time from Pickup to Arrival',axis=1)
+x_train = x_train.as_matrix()
+x_test = x_test.as_matrix()
 
 model= xgb.XGBRegressor(base_score=0.5, booster='gbtree', colsample_bylevel=1,
              colsample_bynode=1, colsample_bytree=1, gamma=0,
