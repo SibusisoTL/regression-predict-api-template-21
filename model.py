@@ -97,8 +97,6 @@ def _preprocess_data(data):
     df_clean.drop(['Placement - Day of Month','Placement - Weekday (Mo = 1)', 'Confirmation - Day of Month', 'Confirmation - Weekday (Mo = 1)', 'Arrival at Pickup - Day of Month',
        'Arrival at Pickup - Weekday (Mo = 1)', 'Pickup - Day of Month', 'Pickup - Weekday (Mo = 1)'], axis = 1, inplace = True)
 
-## We will drop the columns that are not in the test data set to keep consistency
-    df_clean.drop(['Arrival at Destination - Day of Month', 'Arrival at Destination - Weekday (Mo = 1)', 'Arrival at Destination - Time'], axis = 1, inplace = True)
 
 ## Note that for Placement Time column we just want the time and not date
     df_clean['Placement - Time'] = df_clean['Placement - Time'].dt.time
